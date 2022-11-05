@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  postgres:
+    image: pg_custom:alpha
+    environment:
+      - POSTGRES_PASSWORD=mdp
+      - POSTGRES_USER=admin
+    ports:
+      - 5432:5432
+    volumes: 
+      - /var/lib/docker/volumes/pg1_custom_data/_data:/var/lib/postgresql/data
+    networks:
+      net: {}
+  
+  mongodb:
+    image: mongo_custom:alpha
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=mdp
+    ports:
+      - 27017:27017
+    volumes: 
+      - /var/lib/docker/volumes/mongo_custom_data/_data:/data/db
+    networks:
+      net: {}
+
+
+  admirer:
+    image: adminer
+    ports:
+      - 8020:8080
+    networks:
+      net: {}
+
+  flask:
+    image: flask-app:alpha
+    container_name: flask-app
+    ports:
+      - 8081:5000
+    depends_on:
+      - postgres
+    networks:
+      net: {}
+
+networks:
+  net: {}
+
+
+  # apache:
+  #   image: apache_custom:alpha
+  #   container_name: apache_custom
+  #   ports:
+  #     - 8081:80
+  #   networks:
+  #     net: {}

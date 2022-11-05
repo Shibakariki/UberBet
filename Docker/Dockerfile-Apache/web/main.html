@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="has-background-light">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hello Bulma!</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    </head>
+    <body>
+        <section class="section block has-background-grey-lighter">
+            <h1 class="title has-text-centered">
+                Projet Big Data - NoSQL
+            </h1>
+            <p class="subtitle has-text-centered">
+                Avec <strong>Docker</strong>, <strong>PostgreSQL</strong> et <strong>MongoDB</strong>!
+            </p>
+        </section>
+
+        <section class="block">
+            <p class="title has-text-centered">Formulaire de connexion</p>
+        </section>
+
+        <section class="block">
+            <div class="columns is-half is-centered is-three-fifths">
+                <div class="column is-two-fifths">
+                    <div class="box has-background-grey-lighter">
+                        <form method="POST" action="inscription.php">
+                            <label class="label">Name</label>
+                            <div class="control block">
+                                <input class="input" name="name" type="text" placeholder="Text input">
+                            </div>
+                        
+                            <label class="label">Username</label>
+                            <div class="control has-icons-left has-icons-right block">
+                                <input class="input" name="username" type="text" placeholder="Text input">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <!-- <span class="icon is-small is-right">
+                                    <i class="fas fa-check"></i>
+                                </span> -->
+                            </div>
+                            <!-- <p class="help is-success">This username is available</p> -->
+                        
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left has-icons-right block">
+                            <input class="input" name="mail" type="email" placeholder="Email input">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <!-- <span class="icon is-small is-right">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </span> -->
+                            </div>
+                            <!-- <p class="help is-danger">This email is invalid</p> -->
+                        
+                            <!--<label class="label">Subject</label>
+                            <div class="control">
+                            <div class="select">
+                                <select>
+                                <option>Select dropdown</option>
+                                <option>With options</option>
+                                </select>
+                            </div>
+                            </div>
+                        
+                            <label class="label">Message</label>
+                            <div class="control">
+                            <textarea class="textarea" placeholder="Textarea"></textarea>
+                            </div>
+                        
+                            <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                I agree to the <a href="#">terms and conditions</a>
+                            </label>
+                            </div>
+                        
+                            <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="question">
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="question">
+                                No
+                            </label>
+                            </div>--->
+                        
+                            <div class="control block">
+                                <button class="button is-link">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
