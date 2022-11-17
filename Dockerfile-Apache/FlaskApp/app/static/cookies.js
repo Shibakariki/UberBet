@@ -23,3 +23,9 @@ function supprimerCookie(nom)
     date.setTime(date.getTime()-1000);
     document.cookie = nom+"=; expires="+date.toGMTString()+ "; path=/";;
 }
+
+function confirmConnexion() {
+    var loc = window.location.toString().replace("confirm-","").split("/");
+    creerCookie("name",loc[loc.length-1],1);
+    redirect('game');
+}

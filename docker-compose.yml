@@ -11,6 +11,16 @@ services:
       - ./volumes/volume-pg:/var/lib/postgresql/data
     networks:
       net: {}
+
+    redis:
+      image: redis_custom:alpha
+      ports:
+        - 6379:6379
+      volumes: 
+        - ./volumes/volume-redis:/var/lib/redis
+      networks:
+        net: {}
+
   
   apache-flask:
     image: apache2_custom:alpha

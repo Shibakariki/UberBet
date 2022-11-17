@@ -3,5 +3,4 @@ redis==4.3.4
 virtualenv==20.16.6
 psycopg2_binary == 2.9.4
 numpy == 1.23.4
-# Flask-MySQLdb == 1.0.1
-# mysqlclient==2.1.1
+redis==4.3.4

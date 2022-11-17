@@ -79,11 +79,9 @@ function refreshScore() {
 function getLoc()
 {
     var tmp = window.location.toString().split("/");
-    alert(tmp[tmp.length-1]);
     if (tmp[tmp.length-2] == "erreur")
     {
         tmp.splice(tmp.length-1,2);
-        alert(tmp);
     }
     else
     {

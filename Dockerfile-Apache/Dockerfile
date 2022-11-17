@@ -21,15 +21,6 @@ COPY ./FlaskApp /var/www/FlaskApp
 RUN a2ensite app
 
 RUN service apache2 start
-# RUN sleep 10
-
-# # RUN chown -R bflaskappuser:www-data /var/www/BasicFlaskApp
-
-# RUN service apache2 stop
-# RUN sleep 10
-
-# RUN service apache2 start
-# RUN sleep 4
 
 EXPOSE 80 443
 
