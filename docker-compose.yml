@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  postgres:
+    image: pg_custom:alpha
+    environment:
+      - POSTGRES_PASSWORD=mdp
+      - POSTGRES_USER=admin
+    ports:
+      - 5432:5432
+    volumes: 
+      - ./volumes/volume-pg:/var/lib/postgresql/data
+    networks:
+      net: {}
+  
+  apache-flask:
+    image: apache2_custom:alpha
+    ports:
+      - 8888:80
+    networks:
+      net: {}
+
+
+  admirer:
+    image: adminer
+    ports:
+      - 8020:8080
+    networks:
+      net: {}
+
+networks:
+  net: {}

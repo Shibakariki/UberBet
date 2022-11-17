@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /
+
+Redirect 301 /index /index.html
+Redirect 301 /main /main.html

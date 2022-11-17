@@ -1,27 +1,44 @@
 var cardNumber;
 var betCard = null;
-var allJetons = 100;
 var betVal;
+
+function getNbJetons()
+{
+    return parseInt(recupererCookie("ckitonbjt-v2"));
+}
+
+function setNbJetons(nbJetons)
+{
+    supprimerCookie("ckitonbjt-v2");
+    creerCookie("ckitonbjt-v2",nbJetons,1);
+    redirect("resetJetons",recupererCookie("userID"));
+}
 
 //TODO:Fonction qui check dans la bdd le nombre de jetons
 
-function game()
+function sleep(milliseconds) {  
+    return new Promise(resolve => setTimeout(resolve, milliseconds));  
+}  
+
+async function game()
 {
     var multiple = 2;
     if(betCard != null)
     {
         var winnerCard = Math.floor(Math.random() * 4)+1;
         showWait();
+        await sleep(3000);  
         if(winnerCard == betCard)
         {
-            allJetons += betVal*multiple - betVal;
+            setNbJetons(getNbJetons() + betVal*multiple - betVal);
         }
         else
         {
-            allJetons -= betVal;
+            setNbJetons(getNbJetons() - betVal);
         }
         reset();
         refreshScore();
+        closeWait();
     }
     else
     {
@@ -31,10 +48,10 @@ function game()
 }
 
 function refreshScore() {
-    creerCookie("name","axel",1);
+    creerCookie("name","unknown",1);
     if(recupererCookie("name") != null)
     {
-        var number = allJetons.toString();
+        var number = getNbJetons().toString();
         document.getElementById("nbJetons").innerHTML = number + " Jetons";
     }
     else
@@ -66,13 +83,28 @@ function jetonsRedirection()
     return;
 }
 
-// var bttn = document.getElementById('main-redirect');
-// bttn.addEventListener('click', redirect, true);
+function redirect(param=null){
+    var page = getLoc() + "/" + this.id.split("-")[0].toString();
+    if (param != null)
+    {
+        page += "/"+param;
+    }
+    window.location.href = page;
+}
 
-// function redirect(){
-//     var page = getLoc() + "/" + this.id.split("-")[0].toString();
-//     window.location.href = page;
-// }
+function redirect(page_name,param=null){
+    var page = getLoc() + "/" + page_name;
+    if (param != null)
+    {
+        page += "/"+param;
+    }
+    window.location.href = page;
+}
+
+function redirectBack(){
+    var page = getLoc();
+    window.location.href = page;
+}
 
 var elements = document.getElementsByClassName("modal-reset");
 for (var i = 0; i < elements.length; i++) {
@@ -137,14 +169,9 @@ document.addEventListener('keydown', (event) => {
     const e = event || window.event;
 
     if (e.keyCode === 27) { // Escape key
-        closeAllModal();
+        closeModal();
     }
 });
-var elements = document.querySelectorAll('.modal-close, .modal-background');
-
-for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('click', closeAllModal, false);
-}
 
 document.addEventListener('keydown', (event) => {
     const e = event || window.event;
@@ -170,7 +197,7 @@ function closeModal()
             number = parseInt(number)
             if(Number.isInteger(number) && number > 0)
             {
-                if(number <= allJetons)
+                if(number <= getNbJetons())
                 {
                     refreshBet(number);
                     betCard = cardNumber;

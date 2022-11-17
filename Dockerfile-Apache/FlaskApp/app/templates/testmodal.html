@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="has-background-light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading - Jeu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="./functions.js"></script>
+</head>
+
+<body onload="refreshScore()">
+
+    <nav class="navbar block has-background-grey-lighter" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item">
+                    Projet Big Data - NoSQL
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <button class="button is-link is-outlined has-background-grey-lighter"><span id="nbJetons"></span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="box">
+                    <div class="columns is-centered">
+                        <div class="column is-offset-2">
+                            <p>Indiquer une mise</p>
+                            <input id="bet" class="block">
+                            <button class="button is-centered is-small" onclick="closeModal()">Valider</button>    
+                        </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <section class="block is-centered">
+        <div class="columns is-centered">
+
+            <div class="column is-2">
+                <div class="card">
+                    <div class="card-header-title">
+                        <p>Carte n°4 : <span id="betJetons"></span></p>
+                    </div>
+
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                        </figure>
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="card-footer-item modal-show">BET</a>
+                        <a class="card-footer-item modal-reset">UNBET</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
