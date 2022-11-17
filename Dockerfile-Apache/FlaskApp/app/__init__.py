@@ -42,7 +42,8 @@ def connexion_data():
 
     cur.execute("SELECT mdp FROM test")
     data = cur.fetchall()
-    is_username_in_db = np.isin(mdp, data)
+    return data
+    is_mdp_in_db = np.isin(mdp, data)
     if is_username_in_db:
         return redirect(url_for("inscription_erreur",type="mdp"))
 
@@ -78,11 +79,13 @@ def inscription_data():
     if database_operation(name,username,email,mdp):
         cur.execute("INSERT INTO test(name,username,email,mdp) VALUES (%s,%s,%s,%s)",(name,username,email,mdp))
         conn.commit()
-        return '''
-        <h1>Nom: {}</h1>
-        <h1>Username: {}</h1>
-        <h1>Mail: {}</h1>
-        <h1>Mdp: {}</h1>'''.format(name, username,email,mdp)
+        return redirect(url_for("connexion"))
+
+        # return '''
+        # <h1>Nom: {}</h1>
+        # <h1>Username: {}</h1>
+        # <h1>Mail: {}</h1>
+        # <h1>Mdp: {}</h1>'''.format(name, username,email,mdp)
     return redirect(url_for("inscription"))
 
 @app.route('/erreur/inscription', methods = ['GET','POST'])
@@ -96,11 +99,13 @@ def inscription_erreur_error():
     if database_operation(name,username,email,mdp):
         cur.execute("INSERT INTO test(name,username,email,mdp) VALUES (%s,%s,%s,%s)",(name,username,email,mdp))
         conn.commit()
-        return '''
-        <h1>Nom: {}</h1>
-        <h1>Username: {}</h1>
-        <h1>Mail: {}</h1>
-        <h1>Mdp: {}</h1>'''.format(name, username,email,mdp)
+        return redirect(url_for("connexion"))
+
+        # return '''
+        # <h1>Nom: {}</h1>
+        # <h1>Username: {}</h1>
+        # <h1>Mail: {}</h1>
+        # <h1>Mdp: {}</h1>'''.format(name, username,email,mdp)
     return redirect(url_for("inscription"))
 
 def database_operation(name,username,email,mdp):
