@@ -8,18 +8,18 @@ services:
     ports:
       - 5432:5432
     volumes: 
-      - ./volumes/volume-pg:/var/lib/postgresql/data
+      - ./volumes/volume-pg:/var/lib/postgresql/data:z
     networks:
       net: {}
 
-    redis:
-      image: redis_custom:alpha
-      ports:
-        - 6379:6379
-      volumes: 
-        - ./volumes/volume-redis:/var/lib/redis
-      networks:
-        net: {}
+  redis:
+    image: redis_custom:alpha
+    ports:
+      - 6379:6379
+    volumes: 
+      - ./volumes/volume-redis:/data
+    networks:
+      net: {}
 
   
   apache-flask:

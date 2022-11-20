@@ -18,7 +18,7 @@ function setNbJetons(nbJetons)
 {
     supprimerCookie("ckitonbjt-v2");
     creerCookie("ckitonbjt-v2",nbJetons,1);
-    redirect("resetJetons",recupererCookie("userID"));
+    redirect("resetJetons",recupererCookie("name"));
 }
 
 //TODO:Fonction qui check dans la bdd le nombre de jetons

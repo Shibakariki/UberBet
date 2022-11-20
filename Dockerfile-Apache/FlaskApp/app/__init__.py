@@ -2,14 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 import numpy as np
 import hashlib
 import psycopg2 
-# import redis
+import redis
 # from functions import htmlspecialchars
 
 app = Flask(__name__)
 
-# redis_client = redis.Redis(
-#     host='localhost',
-#     port=6379)
+redis_client = redis.Redis(
+    host='redis',
+    port=6379)
 
 # Connexion to postgres db
 conn = psycopg2.connect(
@@ -57,6 +57,10 @@ def inscription_data():
     conn.commit()
     return redirect(url_for("connexion"))
 
+@app.route('/erreur/inscription',methods = ['GET','POST'])
+def inscription_redirect():
+    return redirect(url_for('inscription'))
+
 @app.route('/erreur/inscription_data', methods = ['GET','POST'])
 def inscription_erreur_error():
     name = htmlspecialchars(request.form.get('name'))
@@ -81,7 +85,10 @@ def inscription_erreur_error():
 
 @app.route('/erreur/<type>', methods = ['GET','POST'])
 def inscription_erreur(type):
-    return render_template('inscription.html')
+    if type=="mdp":
+        return render_template('connexion.html')
+    else:
+        return render_template('inscription.html')
 
 #endregion
 
@@ -90,6 +97,14 @@ def inscription_erreur(type):
 @app.route('/connexion',methods = ['GET','POST'])
 def connexion():
     return render_template('connexion.html')
+
+@app.route('/erreur/connexion',methods = ['GET','POST'])
+def connexion_redirect():
+    return redirect(url_for('connexion'))
+
+@app.route('/deconnexion',methods = ['GET','POST'])
+def deconnexion():
+    return render_template('deconnexion.html')
 
 @app.route('/connexion_data',methods = ['GET','POST'])
 def connexion_data():
@@ -101,7 +116,7 @@ def connexion_data():
     data = cur.fetchall()
     if len(data) > 0:
         return redirect(url_for("confirm_connexion",username=username))
-    return redirect(url_for("inscription_erreur",type="mdp"))
+    return redirect(url_for("connexion_erreur",type="mdp"))
 
 @app.route('/confirm-<username>',methods = ['GET','POST'])
 def confirm_connexion(username):
@@ -115,16 +130,22 @@ def confirm_connexion(username):
 def game():
     name = request.cookies.get('name',default=None)
     if name != None:
-        # jetons = redis_client.get(name)
-        # if jetons == None:
-        #     jetons = "100"
-        #     redis_client.set(name,jetons)
-        # resp = make_response(render_template("game.html"))
-        # resp.set_cookie('ckitonbjt-v2',jetons)
-        # return resp        
+        jetons = redis_client.get(name)
+        if jetons == None:
+            jetons = "100"
+            redis_client.set(name,jetons)
+        resp = make_response(render_template("game.html"))
+        resp.set_cookie('ckitonbjt-v2',jetons)
+        return resp        
         return render_template("game.html")
     else:
         return redirect(url_for('inscription'))
+
+@app.route("/resetJetons/<name>", methods = ['GET'])
+def resetJetons(name):
+    jetons = request.cookies.get('ckitonbjt-v2',default=None)
+    redis_client.set(name,jetons)
+    return redirect(url_for('game'))
 
 
 @app.route('/add',methods = ['GET','POST'])

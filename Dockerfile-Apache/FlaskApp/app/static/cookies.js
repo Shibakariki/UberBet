@@ -24,6 +24,11 @@ function supprimerCookie(nom)
     document.cookie = nom+"=; expires="+date.toGMTString()+ "; path=/";;
 }
 
+function deconnexion() {
+    supprimerCookie("name");
+    redirect('inscription');
+}
+
 function confirmConnexion() {
     var loc = window.location.toString().replace("confirm-","").split("/");
     creerCookie("name",loc[loc.length-1],1);
