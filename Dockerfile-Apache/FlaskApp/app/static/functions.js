@@ -59,10 +59,12 @@ function refreshScore() {
     {
         var number = getNbJetons().toString();
         document.getElementById("nbJetons").innerHTML = number + " Jetons";
+        document.getElementById("deco").innerHTML = "Déconnexion";
     }
     else
     {
-        document.getElementById("nbJetons").innerHTML = "S'inscrire";
+        document.getElementById("nbJetons").innerHTML = "0 Jetons";
+        document.getElementById("deco").innerHTML = "Inscription";
     }
     var loc = window.location.toString().split("/");
     if(loc[loc.length-2]=="erreur")
@@ -107,7 +109,14 @@ function jetonsRedirection()
 
 function deconnexionRedirection()
 {
-    redirect("deconnexion");
+    if(recupererCookie("name") != null)
+    {
+        redirect("deconnexion");
+    }
+    else
+    {
+        redirect("inscription");
+    }
 }
 
 function redirect(param=null){

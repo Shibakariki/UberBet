@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Loading - Inscription</title>
+    <title>UberBet - Connexion</title>
+    <link rel="icon" href="../static/UberBetIcon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script defer src="../static/functions.js"></script>
@@ -16,27 +17,27 @@
     <nav class="navbar block has-background-grey-lighter" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item">
-                <img src="../static/UBERBETALPHA.png" width="75" height="40">
+                <img src="../static/UBERBETV2.png" width="90" height="60">
               </a>
             <a class="navbar-item">
                 <span id="inscription-redirect" onclick="redirect('inscription')">Projet Big Data - NoSQL</span>
+            </a>
+            <a class="navbar-item">    
+                <span id="game-redirect" onclick="redirect('game')">Bet</span>
             </a>
         </div>
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                    <a class="navbar-item">
-                        <span id="game-redirect" onclick="redirect('game')">Jeu</span>
-                    </a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <button class="button is-link is-outlined has-background-grey-lighter"><span id="nbJetons"
-                            onclick="deconnexionRedirection()"></span></button>
-                </div>
-                <div class="navbar-item">
-                    <button class="button is-link is-outlined has-background-grey-lighter"><span id="nbJetons"
+                    <div class="buttons">
+                        <button class="button is-link has-background-link" id="deco" 
+                            onclick="deconnexionRedirection()"></button>
+                        <button class="button is-link is-outlined has-background-grey-lighter"><span id="nbJetons"
                             onclick="jetonsRedirection()"></span></button>
+                    </div>
                 </div>
             </div>
     </nav>

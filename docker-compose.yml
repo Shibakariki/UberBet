@@ -1,19 +1,23 @@
 version: "3.9"
 services:
   postgres:
+    container_name: postgres_1
     image: pg_custom:alpha
+    build: ./Dockerfile-Postgres
     environment:
       - POSTGRES_PASSWORD=mdp
       - POSTGRES_USER=admin
     ports:
       - 5432:5432
     volumes: 
-      - ./volumes/volume-pg:/var/lib/postgresql/data:z
+      - ./volumes/volume-pg:/var/lib/postgresql/data:Z
     networks:
       net: {}
 
   redis:
+    container_name: redis_1
     image: redis_custom:alpha
+    build: ./Dockerfile-Redis
     ports:
       - 6379:6379
     volumes: 
@@ -23,14 +27,17 @@ services:
 
   
   apache-flask:
+    container_name: apache_1
     image: apache2_custom:alpha
+    build: ./Dockerfile-Apache
     ports:
       - 8888:80
     networks:
       net: {}
 
 
-  admirer:
+  adminer:
+    container_name: adminer_1
     image: adminer
     ports:
       - 8020:8080
