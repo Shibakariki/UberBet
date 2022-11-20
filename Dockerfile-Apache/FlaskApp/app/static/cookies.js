@@ -26,7 +26,7 @@ function supprimerCookie(nom)
 
 function deconnexion() {
     supprimerCookie("name");
-    redirect('inscription');
+    redirect('connexion');
 }
 
 function confirmConnexion() {

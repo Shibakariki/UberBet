@@ -152,15 +152,17 @@ def resetJetons(name):
 def add():
     return render_template('add.html')
 
-# @app.route('/donate',methods = ['GET','POST'])
-# def donate():
-#     username = htmlspecialchars(request.form.get('username'))
-#     donate = htmlspecialchars(request.form.get('donate'))
-#     return '''
-#     <h1>Username: {}</h1>
-#     <h1>Don: {}</h1>'''.format(username,donate)
-
-#endregion
+@app.route('/addJetons', methods = ['POST'])
+def addJetons():
+    name = request.cookies.get('name',default=None)
+    jetons = request.form.get('donate')
+    if name != None:
+        try:
+            redis_client.set(name,str(int(redis_client.get(name))+int(jetons)))
+            redis_client.rpush("add-"+name,jetons)
+        except:
+            return redirect(url_for('game'))
+    return redirect(url_for('game'))
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)

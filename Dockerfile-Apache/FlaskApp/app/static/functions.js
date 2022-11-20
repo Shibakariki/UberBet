@@ -105,6 +105,11 @@ function jetonsRedirection()
     return;
 }
 
+function deconnexionRedirection()
+{
+    redirect("deconnexion");
+}
+
 function redirect(param=null){
     var page = getLoc() + "/" + this.id.split("-")[0].toString();
     if (param != null)
