@@ -1,14 +1,18 @@
 version: "3.9"
 services:
   postgres:
-    image: pg_custom:alpha
+    #image: pg_custom:alpha
+    build:
+      context: Dockerfile-Postgres
+      dockerfile: dockerfile-postgres
     environment:
       - POSTGRES_PASSWORD=mdp
       - POSTGRES_USER=admin
     ports:
       - 5432:5432
     volumes: 
-      - ./volumes/volume-pg:/var/lib/postgresql/data:z
+      - "./pgsql-scripts:/docker-entrypoint-initdb.d"
+      - "postgres-volume:/var/lib/postgresql/data"
     networks:
       net: {}
 
@@ -39,3 +43,6 @@ services:
 
 networks:
   net: {}
+
+volumes:
+  postgres-volume:
