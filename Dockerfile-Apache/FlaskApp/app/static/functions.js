@@ -33,15 +33,16 @@ async function game()
     if(betCard != null)
     {
         var winnerCard = Math.floor(Math.random() * 4)+1;
+        var nbJetons = getNbJetons();
         showWait();
         await sleep(3000);  
         if(winnerCard == betCard)
         {
-            setNbJetons(getNbJetons() + betVal*multiple - betVal);
+            setNbJetons(nbJetons + betVal*multiple - betVal);
         }
         else
         {
-            setNbJetons(getNbJetons() - betVal);
+            setNbJetons(nbJetons - betVal);
         }
         reset();
         refreshScore();
@@ -69,10 +70,25 @@ function refreshScore() {
     var loc = window.location.toString().split("/");
     if(loc[loc.length-2]=="erreur")
     {
-        var lb = document.getElementById(loc[loc.length-1].toString());
-        if (lb != null)
+        var item = loc[loc.length-1].toString();
+        alert(item);
+        if (item != "connexion")
         {
-            lb.style.color = "#ff0000";
+            var lb = document.getElementById(item);
+            if (lb != null)
+            {
+                lb.style.color = "#ff0000";
+            }
+        }
+        else
+        {
+            var lb1 = document.getElementById("mdp");
+            var lb2 = document.getElementById("username");
+            if (lb1 != null && lb2 != null)
+            {
+                lb1.style.color = "#ff0000";
+                lb2.style.color = "#ff0000";
+            }
         }
     }
     return;

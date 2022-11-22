@@ -1,9 +1,8 @@
 version: "3.9"
 services:
   postgres:
-    build:
-      context: Dockerfile-Postgres
-      dockerfile: dockerfile-postgres
+    container_name: Postgres
+    build: Dockerfile-Postgres
     environment:
       - POSTGRES_PASSWORD=mdp
       - POSTGRES_USER=admin
@@ -16,10 +15,8 @@ services:
       net: {}
 
   redis:
-    #image: redis_custom:alpha
-    build:
-      context: Dockerfile-Redis
-      dockerfile: Dockerfile
+    container_name: Redis
+    build: Dockerfile-Redis
     ports:
       - 6379:6379
     volumes: 
@@ -29,10 +26,8 @@ services:
 
   
   apache-flask:
-    #image: apache2_custom:alpha
-    build:
-      context: Dockerfile-Apache
-      dockerfile: Dockerfile
+    container_name: Apache-Flask
+    build: Dockerfile-Apache
     ports:
       - 8888:80
     networks:

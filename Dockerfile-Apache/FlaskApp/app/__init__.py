@@ -91,7 +91,7 @@ def inscription_erreur_error():
 
 @app.route('/erreur/<type>', methods = ['GET','POST'])
 def inscription_erreur(type):
-    if type=="mdp":
+    if type=="connexion":
         return render_template('connexion.html')
     else:
         return render_template('inscription.html')
@@ -103,10 +103,6 @@ def inscription_erreur(type):
 @app.route('/connexion',methods = ['GET','POST'])
 def connexion():
     return render_template('connexion.html')
-
-@app.route('/erreur/connexion',methods = ['GET','POST'])
-def connexion_redirect():
-    return redirect(url_for('connexion'))
 
 @app.route('/deconnexion',methods = ['GET','POST'])
 def deconnexion():
@@ -121,16 +117,22 @@ def connexion_data():
     username = htmlspecialchars(request.form.get('username'))
     mdp = htmlspecialchars(request.form.get('mdp'))
     mdp = hashlib.sha256(mdp.encode('utf-8')).hexdigest()
-
     cur.execute("SELECT * FROM test WHERE username = '{}' AND mdp = '{}'".format(username,mdp))
     data = cur.fetchall()
     if len(data) > 0:
         return redirect(url_for("confirm_connexion",username=username))
-    return redirect(url_for("connexion_erreur",type="mdp"))
+    return redirect(url_for("inscription_erreur",type="connexion"))
 
 @app.route('/erreur/connexion_data',methods = ['GET','POST'])
 def connexion_data_redirect():
-    return redirect(url_for('connexion_data'))
+    username = htmlspecialchars(request.form.get('username'))
+    mdp = htmlspecialchars(request.form.get('mdp'))
+    mdp = hashlib.sha256(mdp.encode('utf-8')).hexdigest()
+    cur.execute("SELECT * FROM test WHERE username = '{}' AND mdp = '{}'".format(username,mdp))
+    data = cur.fetchall()
+    if len(data) > 0:
+        return redirect(url_for("confirm_connexion",username=username))
+    return redirect(url_for("inscription_erreur",type="mdp"))
 
 @app.route('/confirm-<username>',methods = ['GET','POST'])
 def confirm_connexion(username):
@@ -150,6 +152,7 @@ def game():
             redis_client.set(name,jetons)
         resp = make_response(render_template("game.html"))
         resp.set_cookie('ckitonbjt-v2',jetons)
+        return resp
         return render_template("game.html")
     else:
         return redirect(url_for('inscription'))
