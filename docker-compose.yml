@@ -1,7 +1,6 @@
 version: "3.9"
 services:
   postgres:
-    #image: pg_custom:alpha
     build:
       context: Dockerfile-Postgres
       dockerfile: dockerfile-postgres
@@ -17,7 +16,10 @@ services:
       net: {}
 
   redis:
-    image: redis_custom:alpha
+    #image: redis_custom:alpha
+    build:
+      context: Dockerfile-Redis
+      dockerfile: Dockerfile
     ports:
       - 6379:6379
     volumes: 
@@ -27,7 +29,10 @@ services:
 
   
   apache-flask:
-    image: apache2_custom:alpha
+    #image: apache2_custom:alpha
+    build:
+      context: Dockerfile-Apache
+      dockerfile: Dockerfile
     ports:
       - 8888:80
     networks:
