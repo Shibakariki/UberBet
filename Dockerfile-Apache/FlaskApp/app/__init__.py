@@ -1,12 +1,14 @@
+#region --- Imports / Database connexions ---
+
 from flask import Flask, render_template, request, redirect, url_for, make_response
-import numpy as np
 import hashlib
 import psycopg2 
 import redis
-# from functions import htmlspecialchars
 
+# Creation of flask app
 app = Flask(__name__)
 
+# Connexion to redis db
 redis_client = redis.Redis(
     host='redis',
     port=6379)
@@ -17,9 +19,13 @@ conn = psycopg2.connect(
         database="postgres",
         user="admin",
         password="mdp")
+
 # Open a cursor to perform database operations (postgres)
 cur = conn.cursor()
 
+#endregion
+
+# Default route
 @app.route('/')
 def home():
     # return render_template('index.html')
@@ -34,6 +40,10 @@ def inscription():
         return redirect(url_for("game"))
     else:
         return render_template('inscription.html')
+
+@app.route('/erreur/inscription',methods = ['GET','POST'])
+def inscription_redirect():
+    return redirect(url_for('inscription'))
 
 @app.route('/inscription_data', methods = ['GET','POST'])  
 def inscription_data():
@@ -56,10 +66,6 @@ def inscription_data():
     cur.execute("INSERT INTO test(name,username,email,mdp) VALUES (%s,%s,%s,%s)",(name,username,email,mdp))
     conn.commit()
     return redirect(url_for("connexion"))
-
-@app.route('/erreur/inscription',methods = ['GET','POST'])
-def inscription_redirect():
-    return redirect(url_for('inscription'))
 
 @app.route('/erreur/inscription_data', methods = ['GET','POST'])
 def inscription_erreur_error():
@@ -106,6 +112,10 @@ def connexion_redirect():
 def deconnexion():
     return render_template('deconnexion.html')
 
+@app.route('/erreur/deconnexion',methods = ['GET','POST'])
+def deconnexion_redirect():
+    return redirect(url_for('deconnexion'))
+
 @app.route('/connexion_data',methods = ['GET','POST'])
 def connexion_data():
     username = htmlspecialchars(request.form.get('username'))
@@ -117,6 +127,10 @@ def connexion_data():
     if len(data) > 0:
         return redirect(url_for("confirm_connexion",username=username))
     return redirect(url_for("connexion_erreur",type="mdp"))
+
+@app.route('/erreur/connexion_data',methods = ['GET','POST'])
+def connexion_data_redirect():
+    return redirect(url_for('connexion_data'))
 
 @app.route('/confirm-<username>',methods = ['GET','POST'])
 def confirm_connexion(username):
@@ -136,10 +150,13 @@ def game():
             redis_client.set(name,jetons)
         resp = make_response(render_template("game.html"))
         resp.set_cookie('ckitonbjt-v2',jetons)
-        return resp        
         return render_template("game.html")
     else:
         return redirect(url_for('inscription'))
+
+@app.route('/erreur/game',methods = ['GET','POST'])
+def game_redirect():
+    return redirect(url_for('game'))
 
 @app.route("/resetJetons/<name>", methods = ['GET'])
 def resetJetons(name):
@@ -147,10 +164,17 @@ def resetJetons(name):
     redis_client.set(name,jetons)
     return redirect(url_for('game'))
 
+@app.route('/erreur/resetJetons/<name>',methods = ['GET','POST'])
+def resetJetons_redirect(name):
+    return redirect(url_for('inscription',name=name))
 
 @app.route('/add',methods = ['GET','POST'])
 def add():
     return render_template('add.html')
+
+@app.route('/erreur/add',methods = ['GET','POST'])
+def add_redirect():
+    return redirect(url_for('add'))
 
 @app.route('/addJetons', methods = ['POST'])
 def addJetons():
@@ -164,8 +188,16 @@ def addJetons():
             return redirect(url_for('game'))
     return redirect(url_for('game'))
 
+@app.route('/erreur/addJetons',methods = ['GET','POST'])
+def addJetons_redirect():
+    return redirect(url_for('addJetons'))
+
+#endregion
+
+# Open flask app
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
 
+# Function
 def htmlspecialchars(content):
     return content.replace("&", "&amp;").replace('"', "&quot;").replace("'", "&#039;").replace("<", "&lt;").replace(">", "&gt;")
