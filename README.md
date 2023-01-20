@@ -1,6 +1,6 @@
 # Projet de NoSql
 
-> ![Alt text](./Dockerfile-Apache/FlaskApp/app/static/UBERBETV2.png "a title")
+> ![Alt text](./Dockerfile-Apache/FlaskApp/app/static/UBERBETV2white.png "a title")
 
 #### But du projet :
 Application web qui communique avec 2 bases de données différentes
